@@ -1134,7 +1134,9 @@ def get_operator_arguments(op_name):
     -------
     operator_arguments : OperatorArguments, namedtuple with number of arguments, names and types
     """
+    import pdb; pdb.set_trace()
     op_handle = OpHandle()
+    
     check_call(_LIB.NNGetOpHandle(c_str(op_name), ctypes.byref(op_handle)))
     real_name = ctypes.c_char_p()
     desc = ctypes.c_char_p()

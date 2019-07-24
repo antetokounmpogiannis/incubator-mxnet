@@ -26,6 +26,28 @@ from benchmark.opperf.rules.default_params import DEFAULTS_INPUTS, MX_OP_MODULE
 # Example: sample_multinomial operator has a parameter 'data'. It expects values to sum up to 1.
 unique_ops = ("sample_multinomial",)
 
+def _op_count(operator_names, filters=("_contrib", "_"), merge_op_forward_backward=True):
+    mx_operators = {}
+    operators_with_backward = []
+
+    if merge_op_forward_backward:
+        filters += ("_backward",)
+
+    for cur_op_name in operator_names:
+        if (cur_op_name.startswith(filters) and cur_op_name.startswith("_contrib")) or not cur_op_name.startswith(filters):
+            mx_operators[cur_op_name] = {"has_backward": False}
+
+        if cur_op_name.startswith("_backward_"):
+            operators_with_backward.append(cur_op_name)
+
+    if merge_op_forward_backward:
+        # Identify all operators that can run backward.
+        for op_with_backward in operators_with_backward:
+            op_name = op_with_backward.split("_backward_")[1]
+            if op_name in mx_operators:
+                mx_operators[op_name]["has_backward"] = True
+
+    return mx_operators
 
 def _select_ops(operator_names, filters=("_contrib", "_"), merge_op_forward_backward=True):
     """From a given list of operators, filter out all operator names starting with given filters and prepares

@@ -42,6 +42,8 @@ def _get_memory_profile(memory_profile_results):
 
 def _get_operator_profile(operator_name, operator_profile_results):
     operator_profile = {}
+    print("lele")
+    print(operator_profile_results)
     for line in operator_profile_results:
         if operator_name in line or operator_name[:3] + " " in line:
             operation = line.split()[0]
