@@ -339,3 +339,29 @@ def get_current_runtime_features():
         runtime_features[feature] = config
 
     return {'runtime_features': runtime_features}
+
+
+def get_all_large_tensor_operators():
+    """Gets all Large tensor operators registered with MXNet.
+
+    Returns
+    -------
+    {"operator_name": {"has_backward", "nd_op_handle", "params"}}
+    """
+    large_tensor_ops = ["transpose"]
+    # ['zeros_like', 'ones_like','empty', 'random.uniform', 'random.randint', 'dot', 'split',
+    #                     'clip', 'FullyConnected', 'broadcast_to', 'broadcast_like', 'tile', 'take', 
+    #                     'slice', 'expand_dims', 'sort', 'argsort', 'argmin', 'topk', 'squeeze', 'where'
+    #                     'sparse.where', 'pick', 'depth_to_space', 'space_to_depth', 'diag', 'ravel_multi_index'
+    #                     'unravel_index', 'swapaxes', 'flip', 'softmax']
+    # print(large_tensor_ops)
+    # Get all mxnet operators
+    mx_operators = _get_all_mxnet_operators()
+    # print(mx_operators)
+    # Filter for Large tensor operators
+    large_tensor_operators = {}
+    for op_name, op_params in mx_operators.items():
+        if op_name in large_tensor_ops and op_name not in unique_ops:
+            large_tensor_operators[op_name] = mx_operators[op_name]
+    # print(large_tensor_operators)
+    return large_tensor_operators

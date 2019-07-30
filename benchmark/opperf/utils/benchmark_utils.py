@@ -120,6 +120,7 @@ def run_op_benchmarks(ops, dtype, ctx, warmup, runs):
         # Prepare inputs for the operator
         inputs = prepare_op_inputs(op_params)
         # Run benchmarks
+        # print(inputs)
         cur_op_res = run_performance_test(op_params["nd_op_handle"],
                                           run_backward=op_params["has_backward"],
                                           dtype=dtype, ctx=ctx,
