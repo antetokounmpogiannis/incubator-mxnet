@@ -38,7 +38,7 @@ from benchmark.opperf.utils.op_registry_utils import get_current_runtime_feature
 # SMALL_X = 1024
 # SMALL_Y = 50
 # LARGE_SIZE = LARGE_X * SMALL_Y
-# inputs = {"shape":(SMALL_X, SMALL_Y),"low":0}
+# inputs = [{"shape":(SMALL_X, SMALL_Y),"low":0}]
 def run_large_test_benchmarks(ctx = mx.cpu(), dtype='float32'):
     # Fetch all Large tensor Operators
     mx_large_tensor_ops = get_all_large_tensor_operators()

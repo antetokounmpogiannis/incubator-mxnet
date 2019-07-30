@@ -100,8 +100,16 @@ DEFAULT_BLOCK_SIZE = [2, 5]
 # For NN operators
 DEFAULT_NN_DATA = [(32, 3, 256, 256),]
 DEFAULT_NN_WEIGHT = [(64, 3*256*256),]
-DEFAULT_NUM_HIDDEN = [64]
+DEFAULT_NN_NUM_HIDDEN = [64]
 DEFAULT_BIAS = [(64,)]
+
+# Misc
+DEFAULT_A_MAX = [8]
+DEFAULT_A_MIN = [1]
+DEFAULT_INDEX = [(1024,),(1,),(100,)]
+DEFAULT_BEGIN = [(1,)]
+DEFAULT_END = [(1,)]
+DEFAULT_NUM_OUTPUTS = [2]
 # Default Inputs. MXNet Op Param Name to Default Input mapping
 DEFAULTS_INPUTS = {"data": DEFAULT_DATA,
                    "sample": DEFAULT_SAMPLE,
@@ -147,12 +155,23 @@ DEFAULTS_INPUTS = {"data": DEFAULT_DATA,
                    "rescale_grad" : DEFAULT_RESCALE_GRAD,
                    "clip_grad" : DEFAULT_CLIP_GRADIENT,
                    "lazy_update" : DEFAULT_LAZY_UPDATE,
-                #    "data_4d": DEFAULT_DATA_4d,
+                   "data_4d": DEFAULT_DATA_4d,
                    "dim1": DEFAULT_DIM_1,
                    "dim2": DEFAULT_DIM_2,
                    "block_size": DEFAULT_BLOCK_SIZE,
-                   "num_hidden": DEFAULT_NUM_HIDDEN,
-                   "bias": DEFAULT_BIAS}
+                   "num_hidden": DEFAULT_NN_NUM_HIDDEN,
+                   "bias": DEFAULT_BIAS,
+                   "a_min": DEFAULT_A_MIN,
+                   "a_max": DEFAULT_A_MAX,
+                   "index": DEFAULT_INDEX,
+                   "begin": DEFAULT_BEGIN,
+                   "end": DEFAULT_END,
+                   "num_outputs": DEFAULT_NUM_OUTPUTS,
+                   "data_nn":DEFAULT_NN_DATA,
+                   "weight_nn": DEFAULT_NN_WEIGHT,
+                   "a":DEFAULT_DATA,
+                   "indices":DEFAULT_INDEX,
+                   "reps":DEFAULT_SAMPLE}
 
 
 # These are names of MXNet operator parameters that is of type NDArray.
@@ -163,4 +182,4 @@ DEFAULTS_INPUTS = {"data": DEFAULT_DATA,
 PARAMS_OF_TYPE_NDARRAY = ["lhs", "rhs", "data", "base", "exp", "sample",
                           "mu", "sigma", "lam", "alpha", "beta", "gamma", "k", "p",
                           "low", "high", "weight", "bias", "moving_mean", "moving_var",
-                          "weight", "weight32", "grad", "mean", "var", "mom", "n", "d", "v", "z", "g", "delta", "data_4d"]
+                          "weight", "weight32", "grad", "mean", "var", "mom", "n", "d", "v", "z", "g", "delta", "data_4d","index","a","indices"]

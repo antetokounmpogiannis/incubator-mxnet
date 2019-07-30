@@ -118,7 +118,9 @@ def run_op_benchmarks(ops, dtype, ctx, warmup, runs):
     mx_op_benchmark_results = []
     for _, op_params in ops.items():
         # Prepare inputs for the operator
-        inputs = prepare_op_inputs(op_params)
+        print(_)
+        print(op_params)
+        inputs = prepare_op_inputs(_,op_params)
         # Run benchmarks
         # print(inputs)
         cur_op_res = run_performance_test(op_params["nd_op_handle"],

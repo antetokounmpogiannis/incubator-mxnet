@@ -106,17 +106,20 @@ def prepare_op_inputs(arg_params, arg_values):
     return inputs
 
 
-def prepare_op_inputs(arg_params):
+def prepare_op_inputs(_, arg_params):
     inputs = []
-
+    rearrange_ops = ['transpose','swapaxes','flip','depth_to_space','space_to_depth']
+    nn_ops = ['FullyConnected']
     # Prepare op to default input mapping
     arg_values = {}
     for arg_name, arg_type in zip(arg_params["params"]["arg_names"],
                                   arg_params["params"]["arg_types"]):
         if "NDArray" in arg_type and arg_name + "_nd" in DEFAULTS_INPUTS:
             arg_values[arg_name] = DEFAULTS_INPUTS[arg_name + "_nd"]
-        elif "NDArray" in arg_type and arg_name + "_4d" in DEFAULTS_INPUTS:
+        elif "NDArray" in arg_type and arg_name + "_4d" in DEFAULTS_INPUTS and _ in rearrange_ops:
             arg_values[arg_name] = DEFAULTS_INPUTS[arg_name + "_4d"]
+        elif "NDArray" in arg_type and arg_name + "_nn" in DEFAULTS_INPUTS and _ in nn_ops:
+            arg_values[arg_name] = DEFAULTS_INPUTS[arg_name + "_nn"]
         elif arg_name in DEFAULTS_INPUTS:
             arg_values[arg_name] = DEFAULTS_INPUTS[arg_name]
         elif "float" in arg_type and arg_name + "_float" in DEFAULTS_INPUTS:
@@ -348,16 +351,19 @@ def get_all_large_tensor_operators():
     -------
     {"operator_name": {"has_backward", "nd_op_handle", "params"}}
     """
-    large_tensor_ops = ["transpose"]
-    # ['zeros_like', 'ones_like','empty', 'random.uniform', 'random.randint', 'dot', 'split',
-    #                     'clip', 'FullyConnected', 'broadcast_to', 'broadcast_like', 'tile', 'take', 
-    #                     'slice', 'expand_dims', 'sort', 'argsort', 'argmin', 'topk', 'squeeze', 'where'
-    #                     'sparse.where', 'pick', 'depth_to_space', 'space_to_depth', 'diag', 'ravel_multi_index'
-    #                     'unravel_index', 'swapaxes', 'flip', 'softmax']
+    large_tensor_ops = ['random_uniform','random_randint','argsort', 'argmin', 'clip', 'broadcast_to',
+                        'broadcast_like', 'depth_to_space', 'diag', 'expand_dims', 'swapaxes',
+                        'ones_like','flip',  'pick', 'softmax', 'space_to_depth','sort', 'FullyConnected',
+                        'tile', 'transpose','topk', 'zeros_like', 'split', 'take']
+    #good -
+    #[""]
+    # 'empty', - no op
+    #'dot','ravel_multi_index','unravel_index','where','sparse.where',
+    # 'slice','squeeze'
     # print(large_tensor_ops)
     # Get all mxnet operators
     mx_operators = _get_all_mxnet_operators()
-    # print(mx_operators)
+    # print(mx_operators.keys())
     # Filter for Large tensor operators
     large_tensor_operators = {}
     for op_name, op_params in mx_operators.items():
