@@ -352,14 +352,12 @@ def get_all_large_tensor_operators():
     {"operator_name": {"has_backward", "nd_op_handle", "params"}}
     """
     large_tensor_ops = ['random_uniform','random_randint','argsort', 'argmin', 'clip', 'broadcast_to',
-                        'broadcast_like', 'depth_to_space', 'diag', 'expand_dims', 'swapaxes',
+                        'broadcast_like', 'depth_to_space', 'expand_dims', 'swapaxes',
                         'ones_like','flip',  'pick', 'softmax', 'space_to_depth','sort', 'FullyConnected',
                         'tile', 'transpose','topk', 'zeros_like', 'split', 'take']
-    #good -
-    #[""]
     # 'empty', - no op
-    #'dot','ravel_multi_index','unravel_index','where','sparse.where',
-    # 'slice','squeeze'
+    # both fail - 'dot','ravel_multi_index','unravel_index','where','sparse.where','slice','squeeze'
+    # gpu fail - 'diag',
     # print(large_tensor_ops)
     # Get all mxnet operators
     mx_operators = _get_all_mxnet_operators()

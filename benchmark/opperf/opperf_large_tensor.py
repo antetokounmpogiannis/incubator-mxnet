@@ -76,27 +76,28 @@ def main():
     parser.add_argument('--dtype', type=str, default='float32', help='DType (Precision) to run benchmarks. By default, '
                                                                      'float32. Valid Inputs - float32, float64, int32, '
                                                                      'int64')
-    # parser.add_argument('-f', '--output-format', type=str, default='json',
-    #                     choices=['json', 'md'],
-    #                     help='Benchmark result output format. By default, json. '
-    #                          'Valid Inputs - json, md')
+    parser.add_argument('-f', '--output-format', type=str, default='json',
+                        choices=['json', 'md'],
+                        help='Benchmark result output format. By default, json. '
+                             'Valid Inputs - json, md')
 
-    # parser.add_argument('-o', '--output-file', type=str, default='./mxnet_operator_benchmarks.json',
-    #                     help='Name and path for the '
-    #                          'output file.')
+    parser.add_argument('-o', '--output-file', type=str, default='./mxnet_operator_benchmarks.json',
+                        help='Name and path for the '
+                             'output file.')
 
     args = parser.parse_args()
-    # logging.info("Running Large tensor benchmarks with the following options: {args}".format(args=args))
-    # assert not os.path.isfile(args.output_file),\
-    #     "Output file {output_file} already exists.".format(output_file=args.output_file)
+    logging.info("Running Large tensor benchmarks with the following options: {args}".format(args=args))
+    assert not os.path.isfile(args.output_file),\
+        "Output file {output_file} already exists.".format(output_file=args.output_file)
 
     # 2. RUN BENCHMARKS
     ctx = _parse_mxnet_context(args.ctx)
     dtype = args.dtype
     final_benchmark_results = run_large_test_benchmarks(ctx=ctx, dtype=dtype)
     print(final_benchmark_results)
+
     # 3. SAVE OUTPUTS
-    # save_to_file(final_benchmark_results, args.output_file, args.output_format, run_time_features)
+    save_to_file(final_benchmark_results, args.output_file, args.output_format, run_time_features)
 
     return 0
 
