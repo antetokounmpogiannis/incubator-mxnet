@@ -52,7 +52,7 @@ def run_large_test_benchmarks():
                             inputs=[{"shape":(SMALL_X, SMALL_Y)}],
                             warmup=10,
                             runs=25)
-        return result
+    return result
 
 def main():
     # 1. GET USER INPUTS
