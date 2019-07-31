@@ -354,7 +354,7 @@ def get_all_large_tensor_operators():
     large_tensor_ops = ['random_uniform','random_randint','argsort', 'argmin', 'clip', 'broadcast_to',
                         'broadcast_like', 'depth_to_space', 'expand_dims', 'swapaxes',
                         'ones_like','flip',  'pick', 'softmax', 'space_to_depth','sort', 'FullyConnected',
-                        'tile', 'transpose','topk', 'zeros_like', 'split', 'take']
+                        'tile', 'transpose','topk', 'zeros_like', 'split', 'take','diag']
     # 'empty', - no op
     # both fail - 'dot','ravel_multi_index','unravel_index','where','sparse.where','slice','squeeze'
     # gpu fail - 'diag',
