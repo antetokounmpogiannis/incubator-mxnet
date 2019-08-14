@@ -93,8 +93,8 @@ DEFAULT_LAZY_UPDATE = [0,1]
 # Hence below we append 4d to mark the difference.
 # For depth_to_space, dimension 3 needs to be a multiple of 'block' and 1 should be a multiple of `block^2`
 DEFAULT_DATA_4d = [(1, 4, 2, 4), (10,25,10,100)]
-DEFAULT_DIM_1 = [0, 1, 2, 3]
-DEFAULT_DIM_2 = [1, 2, 3, 0]
+DEFAULT_DIM_1 = [0]
+DEFAULT_DIM_2 = [1]
 DEFAULT_BLOCK_SIZE = [2, 5]
 
 

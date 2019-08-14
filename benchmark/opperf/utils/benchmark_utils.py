@@ -130,7 +130,7 @@ def run_op_benchmarks(ops, dtype, ctx, profiler, warmup, runs):
     mx_op_benchmark_results = []
     for _, op_params in ops.items():
         # Prepare inputs for the operator
-        inputs = prepare_op_inputs(op_params)
+        inputs = prepare_op_inputs(_, op_params)
         # Run benchmarks
         cur_op_res = run_performance_test(op_params["nd_op_handle"],
                                           run_backward=op_params["has_backward"],
