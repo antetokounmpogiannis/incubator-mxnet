@@ -1296,15 +1296,15 @@ inline bool GatherNDType(const nnvm::NodeAttrs& attrs,
 
 struct gather_nd {
   template<typename DType, typename IType>
-  MSHADOW_XINLINE static void Map(int i, OpReqType req, int N, int M, int K,
+  MSHADOW_XINLINE static void Map(index_t i, OpReqType req, index_t N, index_t M, index_t K,
                                   const mshadow::Shape<10> strides,
                                   DType* out, const DType* data,
                                   const IType* indices) {
-    int offset = 0;
-    for (int j = 0; j < M; ++j) {
-      offset += strides[j] * static_cast<int>(indices[j*N + i]);
+    index_t offset = 0;
+    for (index_t j = 0; j < M; ++j) {
+      offset += strides[j] * static_cast<index_t>(indices[j*N + i]);
     }
-    for (int j = 0; j < K; ++j) {
+    for (index_t j = 0; j < K; ++j) {
       KERNEL_ASSIGN(out[i*K + j], req, data[offset+j]);
     }
   }
@@ -1324,11 +1324,11 @@ void GatherNDForward(const nnvm::NodeAttrs& attrs,
   mshadow::Stream<xpu> *s = ctx.get_stream<xpu>();
   const mxnet::TShape& dshape = inputs[0].shape_;
   const mxnet::TShape& ishape = inputs[1].shape_;
-  int M = ishape[0];
-  int N = ishape.Size() / M;
-  int K = dshape.ProdShape(M, dshape.ndim());
+  index_t M = ishape[0];
+  index_t N = ishape.Size() / M;
+  index_t K = dshape.ProdShape(M, dshape.ndim());
   mshadow::Shape<10> strides;
-  for (int i = M-1, stride = K; i >= 0; stride *= dshape[i], --i) strides[i] = stride;
+  for (index_t i = M-1, stride = K; i >= 0; stride *= dshape[i], --i) strides[i] = stride;
   MSHADOW_TYPE_SWITCH(inputs[0].type_flag_, DType, {  // output data type switch
     MSHADOW_TYPE_SWITCH(inputs[1].type_flag_, IType, {  // indices data type switch
       Kernel<gather_nd, xpu>::Launch(

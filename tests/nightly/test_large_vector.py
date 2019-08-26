@@ -270,13 +270,13 @@ def test_sequence_last():
 #                         true_softmax_cross_entropy, rtol=1e-3, atol=1e-5)
 
 
-# def test_index_copy():
-#     x = mx.nd.zeros(LARGE_X)
-#     t = mx.nd.array([-1])
-#     index = mx.nd.array([LARGE_X - 1])
+def test_index_copy():
+    x = mx.nd.zeros(LARGE_X)
+    t = mx.nd.array([-1])
+    index = mx.nd.array([LARGE_X - 1])
 
-#     x = mx.nd.contrib.index_copy(x, index, t)
-#     assert x[-1] == t[-1]
+    x = mx.nd.contrib.index_copy(x, index, t)
+    assert x[-1] == t[-1]
 
 
 # TODO: correctness of prelu (currently flaky)
