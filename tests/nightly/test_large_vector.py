@@ -266,14 +266,15 @@ def test_dropout():
 #     assert_almost_equal(mx_softmax_cross_entropy.asnumpy(),
 #                         true_softmax_cross_entropy, rtol=1e-3, atol=1e-5)
 
+#  default dtype of mx.nd.array is float32
+#  unless explicitly specified, index array gets truncated into float32
+def test_index_copy():
+    x = mx.nd.zeros(LARGE_X)
+    t = mx.nd.array([-1])
+    index = mx.nd.array([LARGE_X - 1], dtype="int64")
 
-# def test_index_copy():
-#     x = mx.nd.zeros(LARGE_X)
-#     t = mx.nd.array([-1])
-#     index = mx.nd.array([LARGE_X - 1])
-
-#     x = mx.nd.contrib.index_copy(x, index, t)
-#     assert x[-1] == t[-1]
+    x = mx.nd.contrib.index_copy(x, index, t)
+    assert x[-1] == t[-1]
 
 
 if __name__ == '__main__':
