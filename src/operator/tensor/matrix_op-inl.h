@@ -266,7 +266,7 @@ index_t n = shape_0;
 index_t p = shape_1;
 
 for (index_t i = 0; i < n; i += blocksize) {
-//  #pragma omp parallel for
+  #pragma omp parallel for
     for (index_t j = 0; j < p; j += blocksize) {
         // transpose the block
 //        #pragma unroll 4
