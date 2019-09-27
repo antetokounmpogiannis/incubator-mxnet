@@ -1693,6 +1693,7 @@ def upload_s3(){
           // sh 'echo ${env.MXNET_CI_UNITTEST_ARTIFACT_BUCKET}'
             sh 'touch a.txt'
             // archiveArtifacts 'docs/_build/full_website.tgz'
+            sh "echo ${env.BRANCH_NAME}"
             if (env.BRANCH_NAME == "dummy_master") {
               s3Upload(file:'a.txt', bucket:env.MXNET_CI_UNITTEST_ARTIFACT_BUCKET, path:utils.get_git_commit_hash().trim()+"-"+env.BUILD_TAG+"/a.txt")
             }
