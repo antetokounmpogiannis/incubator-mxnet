@@ -135,7 +135,7 @@ def collect_test_results_unix(original_file_name, new_file_name) {
         sh 'cp ' + original_file_name + ' ' + new_file_name
         archiveArtifacts artifacts: new_file_name
         // s3Upload(file:new_file_name, bucket:env.MXNET_CI_UNITTEST_ARTIFACT_BUCKET, path:get_git_commit_hash().trim()+"-"+env.BUILD_TAG+"/"+new_file_name)
-        if (env.BRANCH_NAME == "master") {
+        if (env.BRANCH_NAME == "dummy_master") {
           s3Upload(file:new_file_name, bucket:env.MXNET_CI_UNITTEST_ARTIFACT_BUCKET, path:get_git_commit_hash().trim()+"-"+env.BUILD_TAG+"/"+new_file_name)
         }
     }
@@ -147,7 +147,7 @@ def collect_test_results_windows(original_file_name, new_file_name) {
     if (fileExists(original_file_name)) {
         bat 'xcopy ' + original_file_name + ' ' + new_file_name + '*'
         archiveArtifacts artifacts: new_file_name
-        if (env.BRANCH_NAME == "master") {
+        if (env.BRANCH_NAME == "dummy_master") {
           s3Upload(file:new_file_name, bucket:env.MXNET_CI_UNITTEST_ARTIFACT_BUCKET, path:get_git_commit_hash().trim()+"-"+env.BUILD_TAG+"/"+new_file_name)
         }
     }
